@@ -39,6 +39,20 @@
 <body>
 
 <div class="container">
+
+    {% if erro %}
+<div style="
+    background:#ffe5e5;
+    color:#900;
+    padding:10px;
+    border-radius:6px;
+    margin-bottom:15px;
+    font-weight:bold;
+">
+    ⚠️ {{ erro }}
+</div>
+{% endif %}
+
     <h2>Gerador de Exercícios</h2>
 
     <form method="POST">
@@ -61,3 +75,4 @@
 
 </body>
 </html>
+
