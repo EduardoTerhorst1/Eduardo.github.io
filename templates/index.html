@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador de Exercícios de Soma</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            background: #2e86de;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1b4f72;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Gerador de Exercícios</h2>
+
+    <form method="POST">
+        <label>Quantos exercícios?</label>
+        <input type="number" name="exercicios" min="1" required>
+
+        <label>Quantos números por exercício? (PAR)</label>
+        <input type="number" name="numeros" min="2" max="14" step="2" required>
+
+        <label>Tipo</label>
+        <select name="tipo" required>
+            <option value="dezena">Dezena</option>
+            <option value="centena">Centena</option>
+            <option value="milhar">Milhar</option>
+        </select>
+
+        <button type="submit">Gerar PDF</button>
+    </form>
+</div>
+
+</body>
+</html>
