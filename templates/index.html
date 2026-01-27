@@ -6,29 +6,32 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f4f4f4;
+            background: #f2f2f2;
         }
         .container {
-            width: 400px;
-            margin: 50px auto;
-            background: #fff;
-            padding: 20px;
+            width: 420px;
+            margin: 60px auto;
+            background: white;
+            padding: 25px;
             border-radius: 8px;
         }
+        h2 {
+            text-align: center;
+        }
         label {
+            margin-top: 12px;
             display: block;
-            margin-top: 10px;
         }
         input, select, button {
             width: 100%;
             padding: 8px;
-            margin-top: 5px;
+            margin-top: 6px;
         }
         button {
-            margin-top: 20px;
             background: #2e86de;
             color: white;
             border: none;
+            margin-top: 20px;
             cursor: pointer;
         }
         button:hover {
@@ -39,21 +42,7 @@
 <body>
 
 <div class="container">
-
-    {% if erro %}
-<div style="
-    background:#ffe5e5;
-    color:#900;
-    padding:10px;
-    border-radius:6px;
-    margin-bottom:15px;
-    font-weight:bold;
-">
-    ⚠️ {{ erro }}
-</div>
-{% endif %}
-
-    <h2>Gerador de Exercícios</h2>
+    <h2>Gerador de Exercícios de Soma</h2>
 
     <form method="POST">
         <label>Quantos exercícios?</label>
@@ -62,7 +51,7 @@
         <label>Quantos números por exercício? (PAR)</label>
         <input type="number" name="numeros" min="2" max="14" step="2" required>
 
-        <label>Tipo</label>
+        <label>Tipo de número</label>
         <select name="tipo" required>
             <option value="dezena">Dezena</option>
             <option value="centena">Centena</option>
@@ -75,4 +64,3 @@
 
 </body>
 </html>
-
