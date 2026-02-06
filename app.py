@@ -23,17 +23,17 @@ def gerar_pdf(total_exercicios, qtd_numeros, tipo):
 
     # Layout
     margem_x = 40
-    margem_y = 20
+    margem_y = 50
     coluna_largura = (width - margem_x * 2) / 2
     linha_altura = 16
 
-    altura_exercicio = (qtd_numeros + 3) * linha_altura
+    altura_exercicio = (qtd_numeros + 4) * linha_altura
 
     col = 0
     y = height - margem_y
 
     for i in range(1, total_exercicios + 1):
-        # Muda coluna
+        # Troca de coluna
         if y - altura_exercicio < margem_y:
             col += 1
             y = height - margem_y
@@ -51,14 +51,23 @@ def gerar_pdf(total_exercicios, qtd_numeros, tipo):
         c.drawString(x, y, f"Exercício {i:02d}")
         y -= linha_altura
 
-        # Números
-        for _ in range(qtd_numeros):
-            num = random.randint(minimo, maximo)
-            c.drawRightString(x + coluna_largura - 20, y, str(num))
+        num_x = x + 20
+
+        # Gera números
+        numeros = [random.randint(minimo, maximo) for _ in range(qtd_numeros)]
+
+        for idx, num in enumerate(numeros):
+            # Só o último número recebe o "+"
+            if idx == len(numeros) - 1:
+                texto = f"+ {num}"
+            else:
+                texto = f"  {num}"
+
+            c.drawString(num_x, y, texto)
             y -= linha_altura
 
         # Linha da soma
-        c.drawString(x + coluna_largura - 20 - largura * 6, y, "-" * largura)
+        c.drawString(num_x, y, "-" * (largura + 3))
         y -= linha_altura * 2
 
     c.save()
@@ -85,4 +94,3 @@ def index():
 
 if __name__ == "__main__":
     app.run()
-
