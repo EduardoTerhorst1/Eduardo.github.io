@@ -27,25 +27,32 @@ def gerar_pdf(total_exercicios, qtd_numeros, tipo):
     coluna_largura = (width - margem_x * 2) / 2
     linha_altura = 16
 
-    altura_exercicio = (qtd_numeros + 4) * linha_altura
+    # Altura útil da página
+    altura_util = height - (margem_y * 2)
 
+    # Cada coluna terá exatamente 3 exercícios
+    exercicios_por_coluna = 3
+    altura_exercicio = altura_util / exercicios_por_coluna
+
+    exercicio_na_coluna = 0
     col = 0
-    y = height - margem_y
+    y_base = height - margem_y
 
     for i in range(1, total_exercicios + 1):
-        # Troca de coluna
-        if y - altura_exercicio < margem_y:
+
+        # Nova coluna
+        if exercicio_na_coluna >= exercicios_por_coluna:
+            exercicio_na_coluna = 0
             col += 1
-            y = height - margem_y
 
         # Nova página
         if col > 1:
             c.showPage()
             c.setFont("Courier", 11)
             col = 0
-            y = height - margem_y
 
         x = margem_x + col * coluna_largura
+        y = y_base - (exercicio_na_coluna * altura_exercicio)
 
         # Título
         c.drawString(x, y, f"Exercício {i:02d}")
@@ -57,7 +64,6 @@ def gerar_pdf(total_exercicios, qtd_numeros, tipo):
         numeros = [random.randint(minimo, maximo) for _ in range(qtd_numeros)]
 
         for idx, num in enumerate(numeros):
-            # Só o último número recebe o "+"
             if idx == len(numeros) - 1:
                 texto = f"+ {num}"
             else:
@@ -68,7 +74,8 @@ def gerar_pdf(total_exercicios, qtd_numeros, tipo):
 
         # Linha da soma
         c.drawString(num_x, y, "-" * (largura + 3))
-        y -= linha_altura * 2
+
+        exercicio_na_coluna += 1
 
     c.save()
     buffer.seek(0)
