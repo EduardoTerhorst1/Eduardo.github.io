@@ -23,7 +23,7 @@ def gerar_pdf(total_exercicios, qtd_numeros, tipo):
 
     # Layout
     margem_x = 40
-    margem_y = 50
+    margem_y = 20
     coluna_largura = (width - margem_x * 2) / 2
     linha_altura = 16
 
@@ -85,3 +85,4 @@ def index():
 
 if __name__ == "__main__":
     app.run()
+
