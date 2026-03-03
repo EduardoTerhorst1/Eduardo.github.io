@@ -8,20 +8,18 @@ app = Flask(__name__)
 
 def gerar_pdf(total_exercicios, qtd_numeros, tipo):
 
-    # 🔥 Sempre 6 dígitos
     minimo, maximo = 100000, 999999
 
     buffer = io.BytesIO()
     c = canvas.Canvas(buffer, pagesize=A4)
     width, height = A4
 
-    c.setFont("Courier", 11)
+    c.setFont("Courier", 12)
 
-    # Layout
     margem_x = 40
     margem_y = 50
     coluna_largura = (width - margem_x * 2) / 2
-    linha_altura = 16
+    linha_altura = 18  # 🔥 aumentei a altura das linhas
 
     altura_util = height - (margem_y * 2)
     exercicios_por_coluna = 3
@@ -41,7 +39,7 @@ def gerar_pdf(total_exercicios, qtd_numeros, tipo):
 
         if col > 1:
             c.showPage()
-            c.setFont("Courier", 11)
+            c.setFont("Courier", 12)
             col = 0
 
         x = margem_x + col * coluna_largura
@@ -49,9 +47,8 @@ def gerar_pdf(total_exercicios, qtd_numeros, tipo):
 
         # Título
         c.drawString(x, y, f"Exercício {i:02d}")
-        y -= linha_altura
+        y -= linha_altura * 1.5  # 🔥 mais espaço após título
 
-        # 🔥 Alinhamento à direita
         alinhamento_x = x + coluna_largura - 20
 
         numeros = [random.randint(minimo, maximo) for _ in range(qtd_numeros)]
@@ -69,20 +66,17 @@ def gerar_pdf(total_exercicios, qtd_numeros, tipo):
             y -= linha_altura
 
         # Linha da soma
-        c.drawRightString(alinhamento_x, y, "-" * 10)
+        c.drawRightString(alinhamento_x, y, "-" * 12)
         y -= linha_altura
 
-        # 🔥 Espaço extra para resposta
-        y -= linha_altura * 2
+        # 🔥🔥🔥 GRANDE ESPAÇO PARA RESOLVER
+        y -= linha_altura * 4
 
-        # Salva no gabarito
         gabarito.append((i, soma))
 
         exercicio_na_coluna += 1
 
-    # ==========================
-    # 🔥 PÁGINA DO GABARITO
-    # ==========================
+    # ======= GABARITO =======
     c.showPage()
     c.setFont("Courier", 12)
 
@@ -92,7 +86,7 @@ def gerar_pdf(total_exercicios, qtd_numeros, tipo):
     for numero_exercicio, resultado in gabarito:
         resultado_formatado = f"{resultado:,}".replace(",", ".")
         c.drawString(60, y, f"Exercício {numero_exercicio:02d} = {resultado_formatado}")
-        y -= 20
+        y -= 22
 
         if y < 50:
             c.showPage()
@@ -102,7 +96,6 @@ def gerar_pdf(total_exercicios, qtd_numeros, tipo):
     c.save()
     buffer.seek(0)
     return buffer
-
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -125,3 +118,4 @@ def index():
 
 if __name__ == "__main__":
     app.run()
+
